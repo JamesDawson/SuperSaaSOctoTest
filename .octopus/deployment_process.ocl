@@ -67,7 +67,7 @@ step "Deploy Front-End" {
             Octopus.Action.Azure.UseChecksum = "False"
             Octopus.Action.Package.DownloadOnTentacle = "False"
             Octopus.Action.Package.FeedId = "github-public"
-            Octopus.Action.Package.PackageId = "corvus-dotnet/Corvus.Deployment"
+            Octopus.Action.Package.PackageId = "marain-dotnet/Marain.Tenancy"
             Octopus.Action.RunOnServer = "true"
             OctopusUseBundledTooling = "False"
         }
@@ -76,7 +76,7 @@ step "Deploy Front-End" {
         packages {
             acquisition_location = "Server"
             feed = "github-public"
-            package_id = "corvus-dotnet/Corvus.Deployment"
+            package_id = "marain-dotnet/Marain.Tenancy"
             properties = {
                 SelectionMode = "immediate"
             }
