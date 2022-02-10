@@ -28,7 +28,10 @@ step "Provision Tenant-Specific Storage Container" {
         properties = {
             Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenant Blob Container\""
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                $name = "$OctopusDeploymentTenantName".ToLower().Replace(" ", "-")
+                Write-Host "Provisioning Tenant Blob Container: $name"
+            EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
@@ -51,7 +54,10 @@ step "Provision Tenant-Specific Storage Account" {
         properties = {
             Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenant Storage Account\""
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                $name = "$OctopusDeploymentTenantName".ToLower().Replace(" ", "")
+                Write-Host "Provisioning Tenant Storage Account: $name")
+            EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
@@ -72,7 +78,10 @@ step "Deploy Tenant Database" {
         action_type = "Octopus.Script"
         properties = {
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "write-host \"Deploy Tenant Database\""
+            Octopus.Action.Script.ScriptBody = <<-EOT
+                $name = "$OctopusDeploymentTenantName".Replace(" ", "-")
+                Write-Host "Deploy Tenant Database: $name"
+            EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
         }
@@ -80,30 +89,16 @@ step "Deploy Tenant Database" {
     }
 }
 
-step "Deploy Front-End" {
-    properties = {
-        Octopus.Action.TargetRoles = "ui"
-    }
+step "Deploy Font-End" {
 
     action {
-        action_type = "Octopus.AzureWebApp"
+        action_type = "Octopus.Script"
         properties = {
-            Octopus.Action.Azure.UseChecksum = "False"
-            Octopus.Action.Package.DownloadOnTentacle = "False"
-            Octopus.Action.Package.FeedId = "github-public"
-            Octopus.Action.Package.PackageId = "marain-dotnet/Marain.Tenancy"
             Octopus.Action.RunOnServer = "true"
-            OctopusUseBundledTooling = "False"
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Deploying Front-End\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "PowerShell"
         }
         worker_pool = "Hosted Ubuntu"
-
-        packages {
-            acquisition_location = "Server"
-            feed = "github-public"
-            package_id = "marain-dotnet/Marain.Tenancy"
-            properties = {
-                SelectionMode = "immediate"
-            }
-        }
     }
 }
