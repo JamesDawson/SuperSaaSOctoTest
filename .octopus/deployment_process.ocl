@@ -72,7 +72,7 @@ step "Deploy Tenant Database" {
         action_type = "Octopus.Script"
         properties = {
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "write-host \"Deploy Database\""
+            Octopus.Action.Script.ScriptBody = "write-host \"Deploy Tenant Database\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
         }
