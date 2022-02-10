@@ -1,15 +1,13 @@
 step "Provision Back-End" {
 
     action {
-        action_type = "Octopus.AzurePowerShell"
+        action_type = "Octopus.Script"
         notes = "Deploys back-end infrastructure"
         properties = {
-            Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Back-End\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
-            OctopusUseBundledTooling = "False"
         }
         worker_pool = "Hosted Ubuntu"
     }
@@ -18,10 +16,9 @@ step "Provision Back-End" {
 step "Provision Tenant-Specific Storage Container" {
 
     action {
-        action_type = "Octopus.AzurePowerShell"
+        action_type = "Octopus.Script"
         notes = "Deploys tenant-specific storage container"
         properties = {
-            Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 $name = "$OctopusDeploymentTenantName".ToLower().Replace(" ", "-")
@@ -29,7 +26,6 @@ step "Provision Tenant-Specific Storage Container" {
             EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
-            OctopusUseBundledTooling = "False"
         }
         tenant_tags = ["SuperSaaS Features/dedicated-storage-container"]
         worker_pool = "Hosted Ubuntu"
@@ -39,10 +35,9 @@ step "Provision Tenant-Specific Storage Container" {
 step "Provision Tenant-Specific Storage Account" {
 
     action {
-        action_type = "Octopus.AzurePowerShell"
+        action_type = "Octopus.Script"
         notes = "Deploys tenant-specific storage account"
         properties = {
-            Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 $name = "$OctopusDeploymentTenantName".ToLower().Replace(" ", "")
@@ -50,7 +45,6 @@ step "Provision Tenant-Specific Storage Account" {
             EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
-            OctopusUseBundledTooling = "False"
         }
         tenant_tags = ["SuperSaaS Features/dedicated-storage-account"]
         worker_pool = "Hosted Ubuntu"
