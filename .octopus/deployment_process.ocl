@@ -6,7 +6,7 @@ step "Provision Back-End" {
         properties = {
             Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Infrastructure\""
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Back-End\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
@@ -20,7 +20,29 @@ step "Provision Back-End" {
     }
 }
 
-step "Run a Script" {
+step "Provision Tenant-Specific Back-End" {
+
+    action {
+        action_type = "Octopus.AzurePowerShell"
+        notes = "Deploys back-end infrastructure"
+        properties = {
+            Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenanted Back-End\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "PowerShell"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "Hosted Ubuntu"
+
+        container {
+            feed = "DockerHub"
+            image = "endjin/Corvus.Deployment:0.3.17"
+        }
+    }
+}
+
+step "Deploy Tenant Database" {
 
     action {
         action_type = "Octopus.Script"
@@ -34,7 +56,7 @@ step "Run a Script" {
     }
 }
 
-step "Deploy an Azure Web App (Web Deploy)" {
+step "Deploy Front-End" {
     properties = {
         Octopus.Action.TargetRoles = "ui"
     }
