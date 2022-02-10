@@ -24,11 +24,11 @@ step "Provision Tenant-Specific Storage Container" {
 
     action {
         action_type = "Octopus.AzurePowerShell"
-        notes = "Deploys back-end infrastructure"
+        notes = "Deploys tenant-specific storage container"
         properties = {
             Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenanted Back-End\""
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenant Blob Container\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
@@ -47,11 +47,11 @@ step "Provision Tenant-Specific Storage Account" {
 
     action {
         action_type = "Octopus.AzurePowerShell"
-        notes = "Deploys back-end infrastructure"
+        notes = "Deploys tenant-specific storage account"
         properties = {
             Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenanted Back-End\""
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenant Storage Account\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
