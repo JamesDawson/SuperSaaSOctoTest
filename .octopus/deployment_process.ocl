@@ -20,7 +20,7 @@ step "Provision Back-End" {
     }
 }
 
-step "Provision Tenant-Specific Back-End" {
+step "Provision Tenant-Specific Storage" {
 
     action {
         action_type = "Octopus.AzurePowerShell"
