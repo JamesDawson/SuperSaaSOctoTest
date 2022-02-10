@@ -12,11 +12,6 @@ step "Provision Back-End" {
             OctopusUseBundledTooling = "False"
         }
         worker_pool = "Hosted Ubuntu"
-
-        container {
-            feed = "DockerHub"
-            image = "endjin/Corvus.Deployment:0.3.17"
-        }
     }
 }
 
@@ -38,11 +33,6 @@ step "Provision Tenant-Specific Storage Container" {
         }
         tenant_tags = ["SuperSaaS Features/dedicated-storage-container"]
         worker_pool = "Hosted Ubuntu"
-
-        container {
-            feed = "DockerHub"
-            image = "endjin/Corvus.Deployment:0.3.17"
-        }
     }
 }
 
@@ -64,11 +54,6 @@ step "Provision Tenant-Specific Storage Account" {
         }
         tenant_tags = ["SuperSaaS Features/dedicated-storage-account"]
         worker_pool = "Hosted Ubuntu"
-
-        container {
-            feed = "DockerHub"
-            image = "endjin/Corvus.Deployment:0.3.17"
-        }
     }
 }
 
