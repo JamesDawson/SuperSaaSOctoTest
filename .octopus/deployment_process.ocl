@@ -20,7 +20,30 @@ step "Provision Back-End" {
     }
 }
 
-step "Provision Tenant-Specific Storage" {
+step "Provision Tenant-Specific Storage Container" {
+
+    action {
+        action_type = "Octopus.AzurePowerShell"
+        notes = "Deploys back-end infrastructure"
+        properties = {
+            Octopus.Action.Azure.AccountId = "supersaas-octotest-sp"
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Provisioning Tenanted Back-End\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "PowerShell"
+            OctopusUseBundledTooling = "False"
+        }
+        tenant_tags = ["SuperSaaS/dedicated-compute"]
+        worker_pool = "Hosted Ubuntu"
+
+        container {
+            feed = "DockerHub"
+            image = "endjin/Corvus.Deployment:0.3.17"
+        }
+    }
+}
+
+step "Provision Tenant-Specific Storage Account" {
 
     action {
         action_type = "Octopus.AzurePowerShell"
@@ -49,7 +72,7 @@ step "Deploy Tenant Database" {
         action_type = "Octopus.Script"
         properties = {
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "write-host \"hello script\""
+            Octopus.Action.Script.ScriptBody = "write-host \"Deploy Database\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
         }
