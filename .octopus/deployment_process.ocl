@@ -64,6 +64,7 @@ step "Deploy Tenant Database" {
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
         }
+        tenant_tags = ["SuperSaaS Features/dedicated-storage-container", "SuperSaaS Features/dedicated-storage-account"]
         worker_pool = "Hosted Ubuntu"
     }
 }
