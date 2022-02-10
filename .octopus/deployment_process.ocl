@@ -41,7 +41,7 @@ step "Provision Tenant-Specific Storage Account" {
             Octopus.Action.RunOnServer = "true"
             Octopus.Action.Script.ScriptBody = <<-EOT
                 $name = "$OctopusDeploymentTenantName".ToLower().Replace(" ", "")
-                Write-Host "Provisioning Tenant Storage Account: $name")
+                Write-Host "Provisioning Tenant Storage Account: $name"
             EOT
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
