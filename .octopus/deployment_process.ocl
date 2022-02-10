@@ -19,3 +19,45 @@ step "Provision Back-End" {
         }
     }
 }
+
+step "Run a Script" {
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "write-host \"hello script\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "PowerShell"
+        }
+        worker_pool = "Hosted Ubuntu"
+    }
+}
+
+step "Deploy an Azure Web App (Web Deploy)" {
+    properties = {
+        Octopus.Action.TargetRoles = "ui"
+    }
+
+    action {
+        action_type = "Octopus.AzureWebApp"
+        properties = {
+            Octopus.Action.Azure.UseChecksum = "False"
+            Octopus.Action.Package.DownloadOnTentacle = "False"
+            Octopus.Action.Package.FeedId = "github-public"
+            Octopus.Action.Package.PackageId = "corvus-dotnet/Corvus.Deployment"
+            Octopus.Action.RunOnServer = "true"
+            OctopusUseBundledTooling = "False"
+        }
+        worker_pool = "Hosted Ubuntu"
+
+        packages {
+            acquisition_location = "Server"
+            feed = "github-public"
+            package_id = "corvus-dotnet/Corvus.Deployment"
+            properties = {
+                SelectionMode = "immediate"
+            }
+        }
+    }
+}
