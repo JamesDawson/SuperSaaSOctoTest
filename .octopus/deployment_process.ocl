@@ -33,7 +33,7 @@ step "Provision Tenant-Specific Storage Container" {
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
         }
-        tenant_tags = ["SuperSaaS/dedicated-storage-container", "SuperSaaS Features/dedicated-storage-container"]
+        tenant_tags = ["SuperSaaS/dedicated-storage-container"]
         worker_pool = "Hosted Ubuntu"
 
         container {
@@ -56,7 +56,7 @@ step "Provision Tenant-Specific Storage Account" {
             Octopus.Action.Script.Syntax = "PowerShell"
             OctopusUseBundledTooling = "False"
         }
-        tenant_tags = ["SuperSaaS/dedicated-storage-account", "SuperSaaS Features/dedicated-storage-account"]
+        tenant_tags = ["SuperSaaS/dedicated-storage-account"]
         worker_pool = "Hosted Ubuntu"
 
         container {
