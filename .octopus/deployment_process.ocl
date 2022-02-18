@@ -13,10 +13,25 @@ step "Provision Back-End" {
     }
 }
 
+step "Deploy Font-End" {
+
+    action {
+        action_type = "Octopus.Script"
+        properties = {
+            Octopus.Action.RunOnServer = "true"
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Deploying Front-End\""
+            Octopus.Action.Script.ScriptSource = "Inline"
+            Octopus.Action.Script.Syntax = "PowerShell"
+        }
+        worker_pool = "Hosted Ubuntu"
+    }
+}
+
 step "Provision Tenant-Specific Storage Container" {
 
     action {
         action_type = "Octopus.Script"
+        is_disabled = true
         notes = "Deploys tenant-specific storage container"
         properties = {
             Octopus.Action.RunOnServer = "true"
@@ -36,6 +51,7 @@ step "Provision Tenant-Specific Storage Account" {
 
     action {
         action_type = "Octopus.Script"
+        is_disabled = true
         notes = "Deploys tenant-specific storage account"
         properties = {
             Octopus.Action.RunOnServer = "true"
@@ -69,16 +85,16 @@ step "Deploy Tenant Database" {
     }
 }
 
-step "Deploy Font-End" {
+step "Enable web site" {
 
     action {
         action_type = "Octopus.Script"
         properties = {
             Octopus.Action.RunOnServer = "true"
-            Octopus.Action.Script.ScriptBody = "Write-Host \"Deploying Front-End\""
+            Octopus.Action.Script.ScriptBody = "Write-Host \"Enable web site for users\""
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
         }
-        worker_pool = "Hosted Ubuntu"
+        worker_pool = "Default Worker Pool"
     }
 }
