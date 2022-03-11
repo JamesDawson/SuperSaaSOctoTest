@@ -95,6 +95,6 @@ step "Enable web site" {
             Octopus.Action.Script.ScriptSource = "Inline"
             Octopus.Action.Script.Syntax = "PowerShell"
         }
-        worker_pool = "Default Worker Pool"
+        worker_pool = "Hosted Ubuntu"
     }
 }
